@@ -21,7 +21,7 @@ export default function LoginScreen() {
         if(successLogin || user!= null ){
           router.replace("/(tabs)/explore");
         }else{
-          Alert.alert("Login Faild","Please double check email or password!")
+          Alert.alert("Login Faild","Please check email or password!")
         }
       }
 
