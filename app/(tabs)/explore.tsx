@@ -1,15 +1,25 @@
 import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import { Platform, StyleSheet, Text, TouchableOpacity } from 'react-native';
 
-import { Collapsible } from '@/components/ui/collapsible';
 import { ExternalLink } from '@/components/external-link';
 import ParallaxScrollView from '@/components/parallax-scroll-view';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
+import { Collapsible } from '@/components/ui/collapsible';
 import { IconSymbol } from '@/components/ui/icon-symbol';
 import { Fonts } from '@/constants/theme';
+import { router } from "expo-router";
+import { useUser } from "../../hooks/useUser";
 
 export default function TabTwoScreen() {
+
+  const {user, logout} = useUser();
+
+  const handleLogout = async () => {
+    await logout()
+    router.replace("/(auth)/login");
+  }
+
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
@@ -58,7 +68,7 @@ export default function TabTwoScreen() {
           different screen densities
         </ThemedText>
         <Image
-          source={require('@/assets/images/react-logo.png')}
+          source={require('@/assets/images/reyndepz-logo.png')}
           style={{ width: 100, height: 100, alignSelf: 'center' }}
         />
         <ExternalLink href="https://reactnative.dev/docs/images">
@@ -94,6 +104,9 @@ export default function TabTwoScreen() {
           ),
         })}
       </Collapsible>
+      <TouchableOpacity style={styles.button} onPress={handleLogout}>
+                          <Text style={styles.buttonText}>Logout</Text>
+                      </TouchableOpacity>
     </ParallaxScrollView>
   );
 }
@@ -109,4 +122,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: 8,
   },
+  button:{
+    backgroundColor: "#850606",
+    padding: 14,
+    borderRadius: 8,
+    alignItems: "center",
+  },
+  buttonText:{
+    color: "#fff",
+    fontWeight: "600",
+  }
 });
