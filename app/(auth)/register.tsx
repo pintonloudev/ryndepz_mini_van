@@ -1,4 +1,5 @@
 import { useUser } from "@/hooks/useUser";
+import { FontAwesome6 } from "@react-native-vector-icons/fontawesome6";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import { Image, ImageBackground, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
@@ -191,7 +192,7 @@ export default function RegisterScreen() {
             </View>
             <View style={styles.createAccountSection}>
                 <TouchableOpacity style={styles.backbtn} onPress={() => router.push("/(auth)/login")}>
-                    <Text style={styles.link}>Login to your account</Text>
+                    <Text style={styles.link}><FontAwesome6 style={styles.iconStyle} name="arrow-left-long" iconStyle="solid" /> Login to your account</Text>
                 </TouchableOpacity>
             </View>
             </ScrollView>
@@ -253,7 +254,7 @@ const styles = StyleSheet.create({
     marginTop: 40,
     color: "#04689a",
     fontSize:18,
-    textDecorationLine:"underline"
+    // textDecorationLine:"underline"
   },
   createAccountSection:{
     alignItems: "center",
@@ -276,9 +277,14 @@ const styles = StyleSheet.create({
   },
   inputError:{
     borderColor: "rgb(223, 88, 88)",
-  },backbtn:{},
+  },backbtn:{
+
+  },
   marginBot:{
     marginBottom: 20
+  },iconStyle:{
+    color:"#04689a",
+    fontSize:20
   }
 
 });
