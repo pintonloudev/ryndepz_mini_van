@@ -1,6 +1,7 @@
+import InputFields from "@/components/auth_components/InputFields";
 import { router } from "expo-router";
 import { useState } from "react";
-import { Alert, Image, ImageBackground, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Alert, Image, ImageBackground, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useUser } from "../../hooks/useUser";
 
 export default function LoginScreen() {
@@ -81,24 +82,38 @@ export default function LoginScreen() {
         </View>
             <View style={styles.formSection}>
                 <Text style={styles.title}>Login</Text>
-                <TextInput
+                {/* <TextInput
                     placeholder="Email address"
                     style={[styles.input, errorEmail ? styles.inputError : styles.marginBot]}
                     value={email}
                     onChangeText={validateEmail}
                     autoCapitalize="none"
-                />
+                /> 
                 {errorEmail ? <Text style={styles.errorText}>{errorEmail}</Text> : null}
-                <TextInput
+                */}
+                <InputFields
+                  placeholder="Enter your email"
+                  value={email}
+                  onChangeText={validateEmail}
+                  autoCapitalize="none"
+                  error = {errorEmail}
+                />
+                {/* <TextInput
                     placeholder="Password"
                     style={[styles.input, errorPassword ? styles.inputError : styles.marginBot]}
                     value={password}
                     onChangeText={validatePassword}
                     secureTextEntry
                 />
-                {errorPassword ? <Text style={styles.errorText}>{errorPassword}</Text> : null}
+                {errorPassword ? <Text style={styles.errorText}>{errorPassword}</Text> : null} */}
                 
-
+                <InputFields
+                    placeholder="Password"
+                    value={password}
+                    onChangeText={validatePassword}
+                    error = {errorPassword}
+                    secureTextEntry
+                />
                 <TouchableOpacity style={styles.button} onPress={handleLogin}>
                     <Text style={styles.buttonText}>Login</Text>
                 </TouchableOpacity>
@@ -147,14 +162,6 @@ const styles = StyleSheet.create({
     color:"#fff"
 
   },
-  input: {
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 8,
-    padding: 20,
-    color: "#fff",
-    marginBottom: 5
-  },
   button: {
     backgroundColor: "#04689a",
     padding: 14,
@@ -181,15 +188,5 @@ const styles = StyleSheet.create({
     marginTop:10,
     paddingLeft: 24,
     paddingRight:24
-  },
-  errorText:{
-    color:"rgb(223, 88, 88)",
-    marginBottom: 20,
-  },
-  inputError:{
-    borderColor: "rgb(223, 88, 88)",
-  },
-  marginBot:{
-    marginBottom: 20
   }
 });
