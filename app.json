@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "ryndepz_mini_van",
-    "slug": "ryndepz_mini_van",
+    "name": "Davao Freediving",
+    "slug": "davaofreediving",
      "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/reyndepz-logo.png",
-    "scheme": "ryndepz",
+    "icon": "./assets/images/logo.png",
+    "scheme": "davaofreediving",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
@@ -13,27 +13,27 @@
     },
     "android": {
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
-        "foregroundImage": "./assets/images/reyndepz-logo.png",
-        "backgroundImage": "./assets/images/reyndepz-logo.png",
-        "monochromeImage": "./assets/images/reyndepz-logo.png"
+        "backgroundColor": "#7cd858",
+        "foregroundImage": "./assets/images/logo.png",
+        "backgroundImage": "./assets/images/logo.png",
+        "monochromeImage": "./assets/images/logo.png"
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false
     },
     "web": {
       "output": "static",
-      "favicon": "./assets/images/reyndepz-logo.png"
+      "favicon": "./assets/images/logo.png"
     },
     "plugins": [
       "expo-router",
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/reyndepz-logo.png",
+          "image": "./assets/images/logo.png",
           "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#ffffff",
+          "backgroundColor": "#7cd858",
           "dark": {
             "backgroundColor": "#000000"
           }

@@ -1,7 +1,10 @@
 import InputFields from "@/components/auth_components/InputFields";
+import { Colors } from "@/constants/theme";
+import { validateEmail, validatePassword } from "@/utils/FieldValidations";
+import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
 import { useState } from "react";
-import { Alert, Image, ImageBackground, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Alert, Pressable, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useUser } from "../../hooks/useUser";
 
 export default function LoginScreen() {
@@ -10,183 +13,156 @@ export default function LoginScreen() {
   const [errorEmail, setErrorEmail] = useState("");
   const [errorPassword, setErrorPassword] = useState("");
 
-  const {user, login, currentUser} = useUser();
-  
+  const { user, login, currentUser } = useUser();
+  const [loading, setLoading] = useState(false);
   const handleLogin = async () => {
-    try{
-      if(validateFields()){
+    try {
+      const [validated_email] = validateEmail(email)
+      const [validated_password] = validatePassword(password)
+      if (validated_email.valid && validated_password.valid) {
+        setLoading(true);
         let successLogin = false;
-        if(user == null && email != "" && password != ""){
-          successLogin = await login(email,password)
+        if (user === null && email !== "" && password !== "") {
+          successLogin = await login(email, password)
         }
-        if(successLogin || user!= null ){
+        if (successLogin || user !== null) {
           router.replace("/(tabs)/explore");
-        }else{
-          Alert.alert("Login Faild","Please check email or password!")
+        } else {
+          Alert.alert("Login Faild", "Please check email or password!")
         }
+        setLoading(false);
+      } else {
+        setErrorEmail(validated_email.error)
+        setErrorPassword(validated_password.error)
       }
-
-    }catch(error:any){
-      console.log("login errors:",error)
+    } catch (error: any) {
+      console.log("login errors:", error)
+      setLoading(false);
     }
-    
+
   };
-
-  const validateFields=()=>{
-    var complete = true;
-    complete = validateEmail(email)
-    complete = validatePassword(password)
-    return complete
-  }
-
-  const validateEmail = (text:string) => {
-    setEmail(text);
-
-    const emailRegex =
-      /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    if (!emailRegex.test(text)) {
-      setErrorEmail("Please enter a valid email address");
-      return false
-    } else {
-      setErrorEmail("");
-      return true
-    }
-  };
-  
-  const validatePassword = (text:string) => {
-    setPassword(text);
-    if (text.length < 8) {
-      setErrorPassword("Password must be 8 characters or more");
-      return false
-    } else {
-      setErrorPassword("");
-      return true
-    }
-  };
-
   return (
-    <View style={styles.mainContainer}>
-        <ImageBackground
-                source={require("../../assets/images/section-background-2.jpg")}
-                imageStyle={styles.formBackground}
-                resizeMode="cover"
-            >
-          <ScrollView style={{ height:"100%"}}bounces
-  showsVerticalScrollIndicator={false}>
-        <View style={styles.topSection}>
-            <Image
-                source={require("../../assets/images/reyndepz-logo.png")}
-                style={styles.logo}
-            />
+    <LinearGradient
+      // Background Linear Gradient
+      colors={[Colors.dark.gradient1, Colors.dark.gradient2]}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 2, y: 1 }}
+      style={[styles.container]}
+    >
+      <View style={[styles.section, styles.item_center]}>
+        <Text style={styles.page_title}>Let’s Get You {"\n"}Sign in!</Text>
+      </View>
+      <View style={styles.white_section} >
+        <View >
+          <InputFields
+            placeholder="example@example.com"
+            value={email}
+            onChangeText={setEmail}
+            autoCapitalize="none"
+            error={errorEmail ? true : false}
+            errorMessage={errorEmail}
+            label="Enter your email address"
+            placeholderTextColor={Colors.light.placeholder}
+          />
+
+          <InputFields
+            placeholder="Password"
+            value={password}
+            onChangeText={setPassword}
+            error={errorPassword ? true : false}
+            errorMessage={errorPassword}
+            placeholderTextColor={Colors.light.placeholder}
+            label="Enter your password"
+            secureTextEntry
+          />
+          <Pressable onPress={handleLogin} >
+            <LinearGradient
+              colors={[Colors.dark.gradient1, Colors.dark.gradient2]}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={[styles.button_gradient]}>
+              <Text style={[styles.button_gradient_text]}>SIGN IN</Text>
+            </LinearGradient>
+          </Pressable>
         </View>
-            <View style={styles.formSection}>
-                <Text style={styles.title}>Login</Text>
-                {/* <TextInput
-                    placeholder="Email address"
-                    style={[styles.input, errorEmail ? styles.inputError : styles.marginBot]}
-                    value={email}
-                    onChangeText={validateEmail}
-                    autoCapitalize="none"
-                /> 
-                {errorEmail ? <Text style={styles.errorText}>{errorEmail}</Text> : null}
-                */}
-                <InputFields
-                  placeholder="Enter your email"
-                  value={email}
-                  onChangeText={validateEmail}
-                  autoCapitalize="none"
-                  error = {errorEmail}
-                />
-                {/* <TextInput
-                    placeholder="Password"
-                    style={[styles.input, errorPassword ? styles.inputError : styles.marginBot]}
-                    value={password}
-                    onChangeText={validatePassword}
-                    secureTextEntry
-                />
-                {errorPassword ? <Text style={styles.errorText}>{errorPassword}</Text> : null} */}
-                
-                <InputFields
-                    placeholder="Password"
-                    value={password}
-                    onChangeText={validatePassword}
-                    error = {errorPassword}
-                    secureTextEntry
-                />
-                <TouchableOpacity style={styles.button} onPress={handleLogin}>
-                    <Text style={styles.buttonText}>Login</Text>
-                </TouchableOpacity>
-            </View>
-            <View style={styles.createAccountSection}>
-                <TouchableOpacity onPress={() => router.push("/(auth)/register")}>
-                    <Text style={styles.link}>Create an account</Text>
-                    <Text style={styles.createaccountdescription}>Create an account to track your orders, 
-                        save items to your wishlist, and enjoy a faster, secure checkout experience.</Text>
-                </TouchableOpacity>
-            </View>
-            </ScrollView>
-        </ImageBackground>
-    </View>
+        <View style={styles.bottom_section_right}>
+          <TouchableOpacity onPress={() => router.push("/(auth)/register")} >
+            <Text style={styles.bottom_section_right_text}>Don’t have an account?</Text>
+            <Text style={{textAlign:"right",fontWeight:800, fontSize:18, color:Colors.light.tint}}>Sign up</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+      {loading && (
+        <View style={styles.loadingOverlay}>
+          <ActivityIndicator size="large" color="#fff" />
+        </View>
+      )}
+    </LinearGradient>
   );
 }
 
 const styles = StyleSheet.create({
-  mainContainer: {
+
+  loadingOverlay: {
+    ...StyleSheet.absoluteFillObject, // covers whole screen
+    backgroundColor: 'rgba(0,0,0,0.5)', // semi-transparent dark background
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 10,
+  },
+  container: {
     flex: 1,
+    paddingTop: 80,
+    paddingBottom: 0,
   },
-  topSection:{
-    height:"50%",
-    justifyContent: "center",
-    alignItems: "center",
-    paddingTop:200
-  },
-  logo: {
-    width: 200,
+  section: {
+    paddingLeft: 20,
+    paddingRight: 20,
+  }, item_center: {
+    // alignItems: 'center',
+    justifyContent: 'center',
     height: 200,
   },
-  formSection:{
-    paddingBottom:30,
-    padding: 24,
-    overflow: "hidden",
-    height:"40%"
+  page_title: {
+    fontSize: 60,
+    color: "#fffffF",
+    fontWeight:200
   },
-  formBackground: {
-    position: "absolute", top: 0
+  white_section: {
+    backgroundColor: Colors.light.background,
+    borderTopLeftRadius: 50,
+    borderTopRightRadius: 50,
+    paddingTop: 40,
+    paddingLeft: 30,
+    paddingRight: 30,
+    flex:1
   },
-  title: {
-    fontSize: 50,
-    fontWeight: "100",
-    marginBottom: 24,
-    textAlign: "center",
-    color:"#fff"
-
+  button_gradient: {
+    marginTop: 10,
+    marginBottom: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
+    borderBottomLeftRadius: 30,
+    borderBottomRightRadius: 30,
   },
-  button: {
-    backgroundColor: "#04689a",
-    padding: 14,
-    borderRadius: 8,
-    alignItems: "center",
-    marginTop:20
+  button_gradient_text: {
+    color: Colors.dark.text,
+    fontSize: 18,
+    fontWeight: 500
   },
-  buttonText: {
-    color: "#fff",
-    fontWeight: "600",
-  },
-  link: {
-    textAlign: "center",
-    marginTop: 40,
-    color: "#04689a",
-    fontSize:18
-  },
-  createAccountSection:{
-    height:"10%",
-    alignItems: "center",
-  },
-  createaccountdescription:{
-    color:"#8a8a8aff",
-    marginTop:10,
-    paddingLeft: 24,
-    paddingRight:24
+  bottom_section_right:{
+    position:"absolute",
+    bottom:50,
+    left:0,
+    right:0,
+    alignItems:"flex-end",
+    paddingLeft: 20,
+    paddingRight: 30,
+  },bottom_section_right_text:{
+    fontSize:14,
+    textAlign:"right",
   }
 });

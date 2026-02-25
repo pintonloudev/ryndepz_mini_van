@@ -1,1 +1,2 @@
 font awesome icons link : https://icons.expo.fyi/Index
+LinearGradiant Docs: https://docs.expo.dev/versions/latest/sdk/linear-gradient/
