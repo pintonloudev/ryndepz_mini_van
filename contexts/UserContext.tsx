@@ -15,7 +15,7 @@ type User = {
 type UserContextType = {
   user: User | null;
   login: (email: string, password: string) => Promise<boolean>;
-  register: (email: string, password: string, name: string) => Promise<void>;
+  register: (email: string, password: string, name: string) => Promise<boolean>;
   logout: () => Promise<void>;
   add_user_profile: (fname: string, lname: string, address: string, phonenumber: string, email: string) => Promise<void>;
   sessionChecker: () => Promise<boolean>;
@@ -74,10 +74,10 @@ export function UserProvider({ children }: UserProviderProps) {
     try{
       await account.create(ID.unique(), email, password,name)
       await login(email,password)
-
+      return true
     }catch(error:any){
       console.log("Registering error:", error);
-      
+      return false
     }
   }
 
