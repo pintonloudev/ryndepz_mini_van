@@ -47,7 +47,8 @@ export default function Index() {
         </View>
         <View style={[styles.section, styles.buttons_section,]}>
           <View>
-            <Text style={[styles.title]}>Transform Your Ride</Text>
+            <Text style={[styles.title]}>Connect Train Dive</Text>
+            <Text style={{color:Colors.dark.text, fontSize:14, fontWeight:200, textAlign: "center", marginBottom: 10}}>Your Next Breath Starts Here</Text>
           </View>
           <View>
             <Buttons type="Transparent" onPress={() => router.push("/(auth)/login")} buttonText="SIGN IN"></Buttons>
@@ -121,7 +122,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 45,
     color: Colors.dark.text,
-    paddingBottom: 20,
+    paddingBottom: 10,
     fontWeight: 100
   },
   login_with_social: {

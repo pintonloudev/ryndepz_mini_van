@@ -142,7 +142,8 @@ export default function RegisterScreen() {
       style={[styles.container]}
     >
       <View style={[styles.section, styles.item_center]}>
-        <Text style={styles.page_title}>Join Us {"\n"}Today!</Text>
+        <Text style={[styles.page_title, {fontWeight:800, fontSize:30, marginBottom:-16}]}>START YOUR</Text>
+        <Text style={styles.page_title}>Freediving Journey</Text>
       </View>
       <View style={styles.white_section} >
         <View >

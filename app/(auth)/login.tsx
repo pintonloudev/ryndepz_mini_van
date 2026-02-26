@@ -50,7 +50,8 @@ export default function LoginScreen() {
       style={[styles.container]}
     >
       <View style={[styles.section, styles.item_center]}>
-        <Text style={styles.page_title}>Let’s Get You {"\n"}Sign in!</Text>
+        <Text style={styles.page_title}>Let’s Get You </Text>
+        <Text style={[styles.page_title,{fontWeight:700}]}>Sign in!</Text>
       </View>
       <View style={styles.white_section} >
         <View >
