@@ -16,7 +16,7 @@ type UserContextType = {
   user: User | null;
   login: (email: string, password: string) => Promise<boolean>;
   register: (email: string, password: string, name: string) => Promise<boolean>;
-  logout: () => Promise<void>;
+  logout: () => Promise<boolean>;
   add_user_profile: (fname: string, lname: string, address: string, phonenumber: string, email: string) => Promise<void>;
   sessionChecker: () => Promise<boolean>;
   currentUser:() => Promise<void>;
@@ -105,6 +105,7 @@ export function UserProvider({ children }: UserProviderProps) {
   async function logout() {
     await account.deleteSession("current");
     setUser(null);
+    return true
   }
 
   return (

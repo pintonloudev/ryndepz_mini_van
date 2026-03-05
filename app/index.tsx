@@ -31,7 +31,7 @@ export default function Index() {
   }, []);
 
   if (isLoggedIn) {
-    return <Redirect href="/(tabs)/explore" />;
+    return <Redirect href="/(tabs)/dive" />;
   } else {
 
     return (
@@ -43,7 +43,7 @@ export default function Index() {
         style={[styles.container]}
       >
         <View style={[styles.section, styles.page_title]}>
-          <View><Image source={require("../../assets/images/logo.png")} style={styles.logo} /></View>
+          <View><Image source={require("../assets/images/logo.png")} style={styles.logo} /></View>
         </View>
         <View style={[styles.section, styles.buttons_section,]}>
           <View>
