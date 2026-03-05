@@ -38,7 +38,7 @@ export default function RegisterScreen() {
         setLoading(true);
         if (await register(email, password, fname + " " + lname)) {
           await add_user_profile(fname, lname, address, phonenumber, email)
-          router.replace("/(tabs)/explore");
+          router.replace("/(tabs)/dive");
         } else {
           Alert.alert("Registration faild!", "User already exist.")
         }

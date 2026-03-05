@@ -26,7 +26,7 @@ export default function LoginScreen() {
           successLogin = await login(email, password)
         }
         if (successLogin || user !== null) {
-          router.replace("/(tabs)/explore");
+          router.replace("/(tabs)/dive");
         } else {
           Alert.alert("Login Faild", "Please check email or password!")
         }
